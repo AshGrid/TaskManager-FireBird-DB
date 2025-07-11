@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Student Report Card</title>
+    <style>
+        body {
+            font-family: 'Calibri', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+
+        .report-card {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            border: 2px solid #1a4e8a;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background-color: #1a4e8a;
+            color: white;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .logo {
+            max-height: 80px;
+            margin-bottom: 10px;
+        }
+
+        .school-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .student-info {
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .student-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .student-details {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .detail-item {
+            margin: 5px 0;
+        }
+
+        .grades-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .grades-table th {
+            background-color: #1a4e8a;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .grades-table td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .course-row {
+            background-color: #f9f9f9;
+        }
+
+        .instructor-row {
+            background-color: #e9e9e9;
+            font-style: italic;
+        }
+
+        .summary-row {
+            font-weight: bold;
+            background-color: #e6f2ff;
+        }
+
+        .attendance-section {
+            margin-top: 20px;
+        }
+
+        .attendance-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .attendance-table th {
+            background-color: #1a4e8a;
+            color: white;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .attendance-table td {
+            padding: 8px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .grading-scale {
+            margin-top: 20px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .grading-scale th {
+            background-color: #1a4e8a;
+            color: white;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .grading-scale td {
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+
+        .comments {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f5f5f5;
+            border-radius: 5px;
+            font-style: italic;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: #1a4e8a;
+        }
+
+        .term-header {
+            background-color: #d9e6f2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="report-card">
+    <div class="header">
+        <img src="https://fc-pa.client.renweb.com/ftp/FC-PA/Customization/1202122/FCA%20Report%20Card%20Logo.png" alt="School Logo" class="logo">
+        <div class="school-name">{schoolname}</div>
+        <div>Student Report Card - {yearname}</div>
+    </div>
+
+    <div class="student-info">
+        <div class="student-name">{stu_fullname}</div>
+        <div class="student-details">
+            <div class="detail-item">Grade: {Stu_GradeLevel}</div>
+            <div class="detail-item">Student ID: {stu_id}</div>
+            <div class="detail-item">{stu_address}</div>
+            <div class="detail-item">{stu_csz}</div>
+        </div>
+    </div>
+
+    <table class="grades-table">
+        <thead>
+        <tr>
+            <th style="width: 30%; text-align: left;">Course</th>
+            <th style="width: 12%;">Q1</th>
+            <th style="width: 12%;">Q2</th>
+            <th style="width: 12%;">Q3</th>
+            <th style="width: 12%;">Q4</th>
+            <th style="width: 12%;">Final</th>
+            <th style="width: 10%;">Credit</th>
+        </tr>
+        </thead>
+        <tbody>
+        {Start Class Loop}
+        {if condition="{RC_Class_Line} is not 1"}
+        <tr class="course-row">
+            <td style="text-align: left;">{rc_ClassName}</td>
+            <td>{rc_Classgrade1}</td>
+            <td>{rc_Classgrade2}</td>
+            <td>{rc_Classgrade3}</td>
+            <td>{rc_Classgrade4}</td>
+            <td class="highlight">{rc_ClassFinalavg}</td>
+            <td>{rc_Credit}</td>
+        </tr>
+        <tr class="instructor-row">
+            <td colspan="7" style="text-align: left;">Instructor: {rc_Instructor} | {rc_ClassComment}</td>
+        </tr>
+        {end if}
+        {End Class Loop}
+
+        <tr class="summary-row">
+            <td style="text-align: left;">{yearname} Numeric Average</td>
+            <td>{rc_TotalTerm1AVG_2}</td>
+            <td>{rc_TotalTerm2AVG_2}</td>
+            <td>{rc_TotalTerm3AVG_2}</td>
+            <td>{rc_TotalTerm4AVG_2}</td>
+            <td class="highlight">{rc_TotalfinalAVG_2}</td>
+            <td></td>
+        </tr>
+
+        <tr class="summary-row">
+            <td style="text-align: left;">{yearname} GPA</td>
+            <td>{rc_Totalterm1GPA_3}</td>
+            <td>{rc_Totalterm2GPA_3}</td>
+            <td>{rc_Totalterm3GPA_3}</td>
+            <td>{rc_Totalterm4GPA_3}</td>
+            <td class="highlight">{rc_TotalFinalGPA_3}</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="attendance-section">
+        <h3>Attendance Summary</h3>
+        <table class="attendance-table">
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Q1</th>
+                <th>Q2</th>
+                <th>Q3</th>
+                <th>Q4</th>
+                <th>Year Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td style="text-align: left;">Days Present</td>
+                <td>{HR_Present[1]}</td>
+                <td>{HR_Present[2]}</td>
+                <td>{HR_Present[3]}</td>
+                <td>{HR_Present[4]}</td>
+                <td class="highlight">{HR_Present_YTD}</td>
+            </tr>
+            <tr>
+                <td style="text-align: left;">Excused Absences</td>
+                <td>{HR_AE[1]}</td>
+                <td>{HR_AE[2]}</td>
+                <td>{HR_AE[3]}</td>
+                <td>{HR_AE[4]}</td>
+                <td>{HR_AE_YTD}</td>
+            </tr>
+            <tr>
+                <td style="text-align: left;">Unexcused Absences</td>
+                <td>{HR_AU[1]}</td>
+                <td>{HR_AU[2]}</td>
+                <td>{HR_AU[3]}</td>
+                <td>{HR_AU[4]}</td>
+                <td>{HR_AU_YTD}</td>
+            </tr>
+            <tr>
+                <td style="text-align: left;">Excused Tardies</td>
+                <td>{HR_TE[1]}</td>
+                <td>{HR_TE[2]}</td>
+                <td>{HR_TE[3]}</td>
+                <td>{HR_TE[4]}</td>
+                <td>{HR_TE_YTD}</td>
+            </tr>
+            <tr>
+                <td style="text-align: left;">Unexcused Tardies</td>
+                <td>{HR_TU[1]}</td>
+                <td>{HR_TU[2]}</td>
+                <td>{HR_TU[3]}</td>
+                <td>{HR_TU[4]}</td>
+                <td>{HR_TU_YTD}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="comments">
+        <div><span class="highlight">Cumulative High School GPA:</span> {trans_totalgpa3}</div>
+        <div><span class="highlight">Cumulative High School Numeric Average:</span> {hsonly}{trans_totalavg2}</div>
+        <div><span class="highlight">Class Rank:</span> {Rank_rank}</div>
+        <div style="margin-top: 10px;">
+            {If condition="{Stu_NextStatus} is 'Graduate'"}
+            {stu_fullname} has successfully completed requirements for graduation.
+            {else if condition="{stu_gradeLevel} is {stu_nextGradeLevel}"}
+            {Stu_firstname} is being retained in grade {stu_gradeLevel} because the Academy's requirements for advancement were not met.
+            {else}
+            {Stu_firstname} has completed the requirements for grade {stu_gradeLevel} and will be progressing to {stu_NextGradeLevel}.
+            {end if}
+        </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <h3>Grading Scale</h3>
+        <table class="grading-scale">
+            <thead>
+            <tr>
+                <th>Letter Grade</th>
+                <th>Numeric Range</th>
+                <th>Standard GPA</th>
+                <th>Honors GPA</th>
+                <th>AP GPA</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>A</td>
+                <td>90-100</td>
+                <td>4.0</td>
+                <td>4.5</td>
+                <td>5.0</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>80-89</td>
+                <td>3.0</td>
+                <td>3.5</td>
+                <td>4.16</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>70-79</td>
+                <td>2.0</td>
+                <td>2.3</td>
+                <td>2.91</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>60-69</td>
+                <td>1.0</td>
+                <td>1.0</td>
+                <td>1.66</td>
+            </tr>
+            <tr>
+                <td>F</td>
+                <td>Below 60</td>
+                <td>0.0</td>
+                <td>0.0</td>
+                <td>0.0</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="footer">
+        <div>Providing Academic, Athletic, and Spiritual Excellence Since 1973</div>
+        <div>{schoolname} | {schooladdress}, {schoolcsz} | {schoolphone} | {schoolwebpage}</div>
+    </div>
+</div>
+</body>
+</html>
